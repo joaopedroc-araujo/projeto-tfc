@@ -9,7 +9,20 @@ export type ServiceResponseError = {
 
 export type ServiceResponseSuccess<T> = {
   status: 'SUCCESSFUL',
-  data: T
+  data: T,
+  token?: string
 };
+
+export type LoginResponseSuccess = {
+  data: {
+    token: string
+  }
+};
+
+export type TokenResponse = {
+  token: string;
+};
+
+export type LoginResponse = ServiceResponseError | TokenResponse;
 
 export type ServiceResponse<T> = ServiceResponseError | ServiceResponseSuccess<T>;

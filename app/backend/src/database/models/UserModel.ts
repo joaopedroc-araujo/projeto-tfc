@@ -10,8 +10,8 @@ import db from '.';
 class User extends Model<InferAttributes<User>,
 InferCreationAttributes<User>> {
   declare id: CreationOptional<number>;
-  declare username: string;
-  declare role: string;
+  declare username: CreationOptional<string>;
+  declare role: CreationOptional<string>;
   declare email: string;
   declare password: string;
 }
@@ -25,12 +25,14 @@ User.init({
   },
   username: {
     type: DataTypes.STRING,
-    allowNull: false,
+    allowNull: true,
     unique: true,
+    defaultValue: '',
   },
   role: {
     type: DataTypes.STRING,
-    allowNull: false,
+    allowNull: true,
+    defaultValue: 'user',
   },
   email: {
     type: DataTypes.STRING,

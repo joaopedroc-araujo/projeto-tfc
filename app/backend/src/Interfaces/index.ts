@@ -1,1 +1,1 @@
-export type newTeam<T> = Omit<T, 'id'>;
+export type NewUser<T> = Omit<T, 'id' | 'username' | 'role'>;
