@@ -2,7 +2,7 @@ import { expect } from 'chai';
 import * as sinon from 'sinon';
 import Team  from '../database/models/TeamsModel';
 import TeamModel from '../models/TeamModel';
-import { Model } from 'sequelize';
+
 
 describe('TeamModel', () => {
   let teamModel: TeamModel;

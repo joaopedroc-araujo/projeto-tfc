@@ -2,7 +2,6 @@ import { Request, Router, Response } from 'express';
 import UserController from '../controllers/User.controller';
 import EmailValidation from '../middleware/Validation/EmailValidation';
 import PasswordValidation from '../middleware/Validation/PasswordValidation';
-// import Validation from '../middleware/Validation/ValidateUser';
 // import AuthMiddleware from '../middleware/Auth/AuthToken.middleware';
 
 const userController = new UserController();

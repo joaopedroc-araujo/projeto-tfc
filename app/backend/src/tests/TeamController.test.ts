@@ -66,4 +66,15 @@ describe('TeamsController', () => {
     sinon.assert.calledOnce(teamServiceStub.getAllTeams);
   });
 
+  it('getTeamById retorna 200 e um time por id', async () => {
+    const team = TeamMock[0];
+    req.params = { id: '1' };
+    teamServiceStub.getById.resolves({ status: 'SUCCESSFUL', data: team });
+
+    await teamsController.getTeamById(req as Request, res as Response);
+
+    sinon.assert.calledWith(res.status as sinon.SinonStub, 200);
+    sinon.assert.calledWith(res.json as sinon.SinonStub, team);
+  });
+
 });
