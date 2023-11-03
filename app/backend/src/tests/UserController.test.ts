@@ -35,15 +35,14 @@ describe('UserController', () => {
     sinon.restore();
   });
 
-
-  it('createUser cria um novo usuário e retorna um token', async () => {
+  it('authenticateUser autentica um usuário existente e retorna um token', async () => {
     const user: IUser = UserMock[0];
     const secret = process.env.SECRET || 'your-secret-key';
     const token = jwt.sign({ id: user.id }, secret);
 
     const loginResponse: LoginResponse = { token };
 
-    userServiceStub.createUser.resolves(loginResponse);
+    userServiceStub.authenticateUser.resolves(loginResponse);
 
     const req = { body: user } as Request;
     const res = { status: sinon.stub().returnsThis(), json: sinon.stub() } as unknown as Response;
@@ -51,23 +50,49 @@ describe('UserController', () => {
     res.status = sinon.stub().returns(res);
     res.json = sinon.stub();
 
-    await userController.createUser(req, res);
+    await userController.authenticateUser(req, res);
 
     expect((res.status as sinon.SinonStub).calledWith(200)).to.be.true;
     expect((res.json as sinon.SinonStub).calledWith(loginResponse)).to.be.true;
   });
 
-
-
-  it('createUser retorna um erro se os dados do usuário forem inválidos', async () => {
+  it('authenticateUser retorna um erro se os dados do usuário forem inválidos', async () => {
     const user = UserMock[0];
     const req = { body: user } as Request;
     const res = { status: sinon.stub().returnsThis(), json: sinon.stub() } as unknown as Response;
     const errorResponse: ServiceResponseError = { status: 'INVALID_DATA', data: { message: 'Invalid user data' } };
   
-    userServiceStub.createUser.resolves(errorResponse);
+    userServiceStub.authenticateUser.resolves(errorResponse);
   
-    await userController.createUser(req, res);
+    await userController.authenticateUser(req, res);
+  
+    expect((res.status as sinon.SinonStub).calledWith(400)).to.be.true;
+    expect((res.json as sinon.SinonStub).calledWith(errorResponse)).to.be.true;
+  });
+  
+  it('authenticateUser retorna um erro se o usuário não existir', async () => {
+    const user = UserMock[0];
+    const req = { body: user } as Request;
+    const res = { status: sinon.stub().returnsThis(), json: sinon.stub() } as unknown as Response;
+    const errorResponse: ServiceResponseError = { status: 'NOT_FOUND', data: { message: 'User not found' } };
+  
+    userServiceStub.authenticateUser.resolves(errorResponse);
+  
+    await userController.authenticateUser(req, res);
+  
+    expect((res.status as sinon.SinonStub).calledWith(404)).to.be.true;
+    expect((res.json as sinon.SinonStub).calledWith(errorResponse)).to.be.true;
+  });
+
+  it('authenticateUser retorna erro 400 se o userId não existe', async () => {
+
+    const req = { body: {} } as Request;
+    const res = { status: sinon.stub().returnsThis(), json: sinon.stub() } as unknown as Response;
+    const errorResponse: ServiceResponseError = { status: 'INVALID_DATA', data: { message: 'Invalid user data' } };
+  
+    userServiceStub.authenticateUser.resolves(errorResponse);
+  
+    await userController.authenticateUser(req, res);
   
     expect((res.status as sinon.SinonStub).calledWith(400)).to.be.true;
     expect((res.json as sinon.SinonStub).calledWith(errorResponse)).to.be.true;

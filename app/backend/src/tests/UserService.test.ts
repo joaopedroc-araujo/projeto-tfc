@@ -12,7 +12,6 @@ import IUser from '../Interfaces/Users/IUser';
 import { NewUser } from '../Interfaces';
 import User from '../database/models/UserModel';
 
-
 chai.use(chaiHttp);
 
 const { expect } = chai;
@@ -35,42 +34,41 @@ describe('UserService', () => {
     expect(userService).to.be.instanceOf(UserService);
   });
 
-  it('createUser cria um novo usuário e retorna um token', async () => {
+  it('authenticateUser autentica um usuário existente e retorna um token', async () => {
     const user: IUser = UserMock[0];
-    const secret = process.env.SECRET || 'your-secret-key';
+    const secret = process.env.SECRET || 'paralelepipedo';
     const token = jwt.sign({ id: user.id }, secret);
   
-    userModelStub.createUser.resolves(user as unknown as User);
+    userModelStub.findUserByEmail.resolves(user as unknown as User);
   
-    const result = await userService.createUser(user as NewUser<IUser>);
+    const result = await userService.authenticateUser(user as NewUser<IUser>);
     if ('token' in result) {
       expect(result.token).to.equal(token);
     }
   });
-  
-  it('createUser retorna um erro se os dados do usuário forem inválidos', async () => {
+
+  it('authenticateUser retorna um erro se os dados do usuário forem inválidos', async () => {
     const user: IUser = UserMock[0];
-    userModelStub.createUser.resolves(null);
+    userModelStub.findUserByEmail.resolves(null);
   
-    const result = await userService.createUser(user as NewUser<IUser>);
+    const result = await userService.authenticateUser(user as NewUser<IUser>);
   
-   
     if ('status' in result && 'data' in result) {
       expect(result.status).to.equal('INVALID_DATA');
       expect(result.data.message).to.equal('Invalid user data');
     }
   });
   
-
-  it('createUser retorna um erro se os dados do usuário forem inválidos', async () => {
+  it('authenticateUser retorna um erro se os dados do usuário forem inválidos', async () => {
     const user: IUser = UserMock[0];
-    userModelStub.createUser.resolves(null);
+    userModelStub.findUserByEmail.resolves(null);
   
-    const result = await userService.createUser(user as NewUser<IUser>); 
-
+    const result = await userService.authenticateUser(user as NewUser<IUser>);
+  
     if ('status' in result && 'data' in result) {
       expect(result.status).to.equal('INVALID_DATA');
       expect(result.data.message).to.equal('Invalid user data');
     }
   });
+  
 });

@@ -12,7 +12,8 @@ describe('UserModel', () => {
 
   beforeEach(() => {
     modelStub = {
-      create: sinon.stub(),
+      findUserByEmail: sinon.stub(),
+      // authenticateUser: sinon.stub(),
       findOne: sinon.stub(),
     };
     userModel = new UserModel();
@@ -23,24 +24,43 @@ describe('UserModel', () => {
     sinon.restore();
   });
 
-  it('createUser cria um novo usuário e retorna o usuário criado', async () => {
-    const user: IUser = UserMock[0];
-    modelStub.create.resolves(user);
-
-    const result = await userModel.createUser(user);
-
-    expect(result).to.deep.equal(user);
-    expect(modelStub.create.calledWith(user)).to.be.true;
-  });
+  // it('authenticateUser autentica um usuário existente e retorna o usuário autenticado', async () => {
+  //   const user: IUser = UserMock[0];
+  //   modelStub.findOne.resolves(user);
+  
+  //   const result = await userModel.authenticateUser(user.email, user.password);
+  
+  //   expect(result).to.deep.equal(user);
+  //   expect(modelStub.findOne.calledWith({ where: { email: user.email } })).to.be.true;
+  // });
 
   it('findUserByEmail encontra um usuário por email e retorna o usuário encontrado', async () => {
     const user: IUser = UserMock[0];
     modelStub.findOne.resolves(user);
-    
+
     const result = await userModel.findUserByEmail(user.email);
     // console.log(result);
 
     expect(result).to.deep.equal(user);
     expect(modelStub.findOne.calledWith({ where: { email: user.email } })).to.be.true;
+  });
+
+  it('retorna null se nenhum usuário é encontrado pelo id', async () => {
+    modelStub.findOne.resolves(null);
+    const result = await userModel.findUserById('2');
+    expect(result).to.be.null;
+  });
+
+  it('retorna null se nenhum usuário é encontrado pelo email', async () => {
+    modelStub.findOne.resolves(null);
+    const result = await userModel.authenticateUser('test2@test.com', 'password');
+    expect(result).to.be.null;
+  });
+
+  it('retorna null se o password não é igual ao cadastrado', async () => {
+    const user: IUser = UserMock[0];
+    modelStub.findOne.resolves(user);
+    const result = await userModel.authenticateUser(user.email, 'wrongpassword');
+    expect(result).to.be.null;
   });
 });

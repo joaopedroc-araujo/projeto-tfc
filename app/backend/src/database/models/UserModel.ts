@@ -26,13 +26,11 @@ User.init({
   username: {
     type: DataTypes.STRING,
     allowNull: true,
-    unique: true,
-    defaultValue: '',
+    unique: false,
   },
   role: {
     type: DataTypes.STRING,
-    allowNull: true,
-    defaultValue: 'user',
+    allowNull: false,
   },
   email: {
     type: DataTypes.STRING,

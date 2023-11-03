@@ -1,4 +1,4 @@
-import * as jwt from 'jsonwebtoken';
+import { signToken } from '../middleware/Auth/AuthToken.middleware';
 import IUser from '../Interfaces/Users/IUser';
 import { NewUser } from '../Interfaces';
 import UserModel from '../models/UserModel';
@@ -9,18 +9,19 @@ export default class UserService {
     private userModel = new UserModel(),
   ) { }
 
-  public async createUser(user: NewUser<IUser>): Promise<LoginResponse> {
-    const newUser = await this.userModel.createUser(user);
-    const secret = process.env.SECRET || 'your-secret-key';
+  public async findUserById(id: string): Promise<IUser | null> {
+    const user = await this.userModel.findUserById(id);
+    return user;
+  }
 
-    if (newUser === null) {
-      return {
-        status: 'INVALID_DATA',
-        data: { message: 'Invalid user data' },
-      };
+  public async authenticateUser(user: NewUser<IUser>): Promise<LoginResponse> {
+    const existingUser = await this.userModel.findUserByEmail(user.email);
+
+    if (!existingUser) {
+      return { status: 'INVALID_DATA', data: { message: 'User not found' } };
     }
 
-    const token = jwt.sign({ id: newUser.id }, secret);
+    const token = signToken({ id: existingUser.id });
 
     return { token };
   }
