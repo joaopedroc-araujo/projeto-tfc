@@ -70,5 +70,4 @@ describe('UserService', () => {
       expect(result.data.message).to.equal('Invalid user data');
     }
   });
-  
 });
