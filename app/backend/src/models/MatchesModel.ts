@@ -58,8 +58,8 @@ export default class MatchesModel implements IMatchModel {
     return ({ message: 'Updated' });
   }
 
-  // async newMatch(match: IMatch): Promise<IMatch> {
-  //   const newMatch = await this.model.create(match);
-  //   return newMatch;
-  // }
+  async newMatch(match: IMatch): Promise<IMatch> {
+    const newMatch = await this.model.create(match);
+    return newMatch;
+  }
 }

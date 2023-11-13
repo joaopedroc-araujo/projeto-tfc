@@ -31,8 +31,8 @@ export default class MatchesService {
     return updatedMatch;
   }
 
-  // public async newMatch(match: IMatch): Promise<IMatch> {
-  //   const newMatch = await this.matchesModel.newMatch(match);
-  //   return newMatch;
-  // }
+  public async newMatch(match: IMatch): Promise<IMatch> {
+    const newMatch = await this.matchesModel.newMatch(match);
+    return newMatch;
+  }
 }

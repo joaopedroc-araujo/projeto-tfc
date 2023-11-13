@@ -16,11 +16,11 @@ router.get(
   },
 );
 
-// router.post(
-//   '/',
-//   verifyToken,
-//   (req: Request, res: Response) => matchesController.newMatch(req, res),
-// );
+router.post(
+  '/',
+  verifyToken,
+  (req: Request, res: Response) => matchesController.newMatch(req, res),
+);
 
 router.patch(
   '/:id/finish',
