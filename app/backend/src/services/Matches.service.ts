@@ -17,4 +17,9 @@ export default class MatchesService {
     const matches = await this.matchesModel.getMatchesByProgress(inProgress);
     return matches;
   }
+
+  public async finishMatch(matchId: number, match: Partial<IMatch>): Promise<IMatch | null> {
+    const updatedMatch = await this.matchesModel.finishMatch(matchId, match);
+    return updatedMatch;
+  }
 }

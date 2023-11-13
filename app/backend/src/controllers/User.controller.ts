@@ -16,7 +16,7 @@ export default class UserController {
         // console.log('User not found');
         return res.status(404).json({ message: 'User not found' });
       }
-      console.log(user.role);
+      // console.log(user.role);
       return res.status(200).json({ role: user.role });
     }
     // console.log('User ID not provided');

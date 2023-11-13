@@ -28,4 +28,20 @@ export default class MatchesModel implements IMatchModel {
     });
     return matches;
   }
+
+  async finishMatch(matchId: number, match: Partial<IMatch>): Promise<IMatch | null> {
+    await this.model.update(match, {
+      where: {
+        id: matchId,
+      },
+    });
+
+    const updatedMatch = await this.model.findOne({
+      where: {
+        id: matchId,
+      },
+    });
+
+    return updatedMatch;
+  }
 }

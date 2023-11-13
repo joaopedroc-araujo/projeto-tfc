@@ -1,5 +1,6 @@
 import { Request, Router, Response } from 'express';
 import MatchesController from '../controllers/Matches.controller';
+import { verifyToken } from '../middleware/Auth/AuthToken.middleware';
 
 const matchesController = new MatchesController();
 
@@ -13,6 +14,12 @@ router.get(
     }
     return matchesController.getAllMatches(req, res);
   },
+);
+
+router.patch(
+  '/:id/finish',
+  verifyToken,
+  (req: Request, res: Response) => matchesController.finishMatch(req, res),
 );
 
 export default router;
