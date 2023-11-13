@@ -44,4 +44,22 @@ export default class MatchesModel implements IMatchModel {
 
     return updatedMatch;
   }
+
+  async updateMatch(
+    matchId: number,
+    match: Partial<IMatch>,
+  ): Promise<{ message: string } | null> {
+    await this.model.update(match, {
+      where: {
+        id: matchId,
+        inProgress: true,
+      },
+    });
+    return ({ message: 'Updated' });
+  }
+
+  // async newMatch(match: IMatch): Promise<IMatch> {
+  //   const newMatch = await this.model.create(match);
+  //   return newMatch;
+  // }
 }

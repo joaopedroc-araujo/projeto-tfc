@@ -22,4 +22,17 @@ export default class MatchesService {
     const updatedMatch = await this.matchesModel.finishMatch(matchId, match);
     return updatedMatch;
   }
+
+  public async updateMatch(
+    matchId: number,
+    match: Partial<IMatch>,
+  ): Promise<{ message: string } | null> {
+    const updatedMatch = await this.matchesModel.updateMatch(matchId, match);
+    return updatedMatch;
+  }
+
+  // public async newMatch(match: IMatch): Promise<IMatch> {
+  //   const newMatch = await this.matchesModel.newMatch(match);
+  //   return newMatch;
+  // }
 }

@@ -16,10 +16,22 @@ router.get(
   },
 );
 
+// router.post(
+//   '/',
+//   verifyToken,
+//   (req: Request, res: Response) => matchesController.newMatch(req, res),
+// );
+
 router.patch(
   '/:id/finish',
   verifyToken,
   (req: Request, res: Response) => matchesController.finishMatch(req, res),
+);
+
+router.patch(
+  '/:id',
+  verifyToken,
+  (req: Request, res: Response) => matchesController.updateMatch(req, res),
 );
 
 export default router;
