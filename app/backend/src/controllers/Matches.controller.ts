@@ -1,8 +1,11 @@
 import { Request, Response } from 'express';
 import MatchesService from '../services/Matches.service';
+import IMatch from '../Interfaces/Match/IMatch';
+// import TeamService from '../services/Teams.service';
 
 export default class MatchesController {
   constructor(
+    // private teamsService = new TeamService(),
     private matchesService = new MatchesService(),
   ) { }
 
@@ -35,6 +38,10 @@ export default class MatchesController {
     const match = req.body;
     match.inProgress = true;
     const newMatch = await this.matchesService.newMatch(match);
-    return res.status(201).json(newMatch);
+    if ('error' in newMatch) {
+      const errorMatch = newMatch as unknown as { error: true, status: number, message: string };
+      return res.status(errorMatch.status).json({ message: errorMatch.message });
+    }
+    return res.status(201).json(newMatch as IMatch);
   }
 }
