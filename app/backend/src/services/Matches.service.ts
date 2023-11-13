@@ -12,4 +12,9 @@ export default class MatchesService {
     const matches = await this.matchesModel.getAllMatches();
     return matches;
   }
+
+  public async getMatchesByProgress(inProgress: boolean): Promise<IMatch[]> {
+    const matches = await this.matchesModel.getMatchesByProgress(inProgress);
+    return matches;
+  }
 }

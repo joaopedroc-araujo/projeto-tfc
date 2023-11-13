@@ -10,4 +10,10 @@ export default class MatchesController {
     const matches = await this.matchesService.getAllMatches();
     return res.status(200).json(matches);
   }
+
+  public async getMatchesByProgress(req: Request, res: Response) {
+    const inProgress = req.query.inProgress === 'true';
+    const matches = await this.matchesService.getMatchesByProgress(inProgress);
+    return res.status(200).json(matches);
+  }
 }
