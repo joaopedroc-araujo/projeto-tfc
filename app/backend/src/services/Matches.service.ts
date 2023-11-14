@@ -1,6 +1,5 @@
 import MatchesModel from '../models/MatchesModel';
 import IMatchModel from '../Interfaces/Match/IMatchModel';
-// import { ServiceResponse } from '../Interfaces/ServiceResponse';
 import IMatch from '../Interfaces/Match/IMatch';
 
 export default class MatchesService {
