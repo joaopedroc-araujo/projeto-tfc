@@ -5,7 +5,7 @@ import Match from '../database/models/MatchModels';
 import Team from '../database/models/TeamsModel';
 
 export default class LeaderboardService {
-  static async getHomeLeaderboard(req: Request, res: Response) {
+  static async getHomeLeaderboard(_req: Request, _res: Response) {
     const teams = await Team.findAll();
     const matches = await Match.findAll({ where: { inProgress: false } });
   
