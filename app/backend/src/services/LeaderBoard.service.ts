@@ -8,9 +8,9 @@ export default class LeaderboardService {
   static async getHomeLeaderboard(_req: Request, _res: Response) {
     const teams = await Team.findAll();
     const matches = await Match.findAll({ where: { inProgress: false } });
-  
+
     const leaderboard = teams.map((team) => LeaderboardService.calculateStats(team, matches));
-  
+
     leaderboard.sort((a, b) => {
       if (a.totalPoints !== b.totalPoints) {
         return b.totalPoints - a.totalPoints;
@@ -23,7 +23,7 @@ export default class LeaderboardService {
       }
       return b.goalsFavor - a.goalsFavor;
     });
-  
+
     return leaderboard;
   }
 
