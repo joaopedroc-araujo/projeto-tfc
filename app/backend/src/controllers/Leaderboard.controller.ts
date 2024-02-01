@@ -11,4 +11,13 @@ export default class LeaderboardController {
       res.status(500).json({ error: 'An error occurred while fetching the leaderboard.' });
     }
   }
+
+  public static async getAwayLeaderboard(req: Request, res: Response) {
+    try {
+      const leaderboardData = await LeaderboardService.getAwayLeaderboard(req, res);
+      res.json(leaderboardData);
+    } catch (error) {
+      res.status(500).json({ error: 'An error occurred while fetching the leaderboard.' });
+    }
+  }
 }
