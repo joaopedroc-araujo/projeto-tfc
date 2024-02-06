@@ -2,7 +2,7 @@ import IMatch from '../Interfaces/Match/IMatch';
 import ITeam from '../Interfaces/Teams/Team';
 
 class leaderboardManipulations {
-    static calculateVictories(matches: IMatch[], isHome: boolean) {
+    static calculateVictories(matches: IMatch[], isHome?: boolean) {
         return matches.filter((match) =>
             isHome ? match.homeTeamGoals > match.awayTeamGoals : match.awayTeamGoals > match.homeTeamGoals
         ).length;
@@ -12,19 +12,32 @@ class leaderboardManipulations {
         return matches.filter((match) => match.homeTeamGoals === match.awayTeamGoals).length;
     }
 
-    static calculateGoalsFavor(matches: IMatch[], isHome: boolean) {
+    static calculateGoalsFavor(matches: IMatch[], isHome?: boolean) {
         return matches.reduce((total, match) =>
             total + (isHome ? match.homeTeamGoals : match.awayTeamGoals), 0
         );
     }
 
-    static calculateOwnGoals(matches: IMatch[], isHome: boolean) {
+    static calculateOwnGoals(matches: IMatch[], isHome?: boolean) {
         return matches.reduce((total, match) =>
             total + (isHome ? match.awayTeamGoals : match.homeTeamGoals), 0
         );
     }
 
-    static calculateTeamStats(matches: IMatch[], isHome: boolean) {
+    static calculateAllMatchesStats(team: Partial<ITeam>, matches: IMatch[]) {
+        const allMatches = matches.filter((match) =>
+            match.homeTeamId === team.id || match.awayTeamId === team.id
+        );
+
+        const allMatchesStats = leaderboardManipulations.calculateTeamStats(allMatches);
+
+        return {
+            name: team.teamName,
+            ...allMatchesStats,
+        };
+    }
+
+    static calculateTeamStats(matches: IMatch[], isHome?: boolean) {
         const totalGames = matches.length;
         const totalVictories = leaderboardManipulations.calculateVictories(matches, isHome);
         const totalDraws = leaderboardManipulations.calculateDraws(matches);
@@ -45,11 +58,19 @@ class leaderboardManipulations {
         };
     }
 
-    static calculateStats(team: Partial<ITeam>, matches: IMatch[], isHome: boolean) {
-        const filteredMatches = matches.filter((match) =>
-            isHome ? match.homeTeamId === team.id : match.awayTeamId === team.id
-        );
-        const teamStats = leaderboardManipulations.calculateTeamStats(filteredMatches, isHome);
+    static calculateStats(team: Partial<ITeam>, matches: IMatch[], isHome?: boolean) {
+        let filteredMatches;
+        if (isHome === undefined) {
+            filteredMatches = matches.filter((match) =>
+                match.homeTeamId === team.id || match.awayTeamId === team.id
+            );
+        } else {
+            filteredMatches = matches.filter((match) =>
+                isHome ? match.homeTeamId === team.id : match.awayTeamId === team.id
+            );
+        }
+
+        const teamStats = leaderboardManipulations.calculateTeamStats(filteredMatches, isHome || undefined);
 
         return {
             name: team.teamName,

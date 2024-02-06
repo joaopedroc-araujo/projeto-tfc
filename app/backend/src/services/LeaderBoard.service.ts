@@ -4,6 +4,15 @@ import Team from '../database/models/TeamsModel';
 import leaderboardManipulations from '../utils/leaderboardManipulation';
 
 export default class LeaderboardService {
+  static async getLeaderboard(_req: Request, _res: Response) {
+    const teams = await Team.findAll();
+    const matches = await Match.findAll({ where: { inProgress: false } });
+    console.log(matches);
+    const leaderboard = teams.map((team) => leaderboardManipulations.calculateAllMatchesStats(team, matches));
+
+    return leaderboard;
+  }
+
   static async getHomeLeaderboard(_req: Request, _res: Response) {
     const teams = await Team.findAll();
     const matches = await Match.findAll({ where: { inProgress: false } });
