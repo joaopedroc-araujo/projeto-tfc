@@ -16,9 +16,9 @@
     "compose:up": "cd app && docker-compose up -d --build",
     "compose:down": "cd app && docker-compose down --remove-orphans",
     "logs": "cd app && docker-compose logs -f",
-    "frontend": "cd frontend && npm start",
+    "frontend": "cd app/frontend && npm start",
     "api": "cd app/backend && nodemon app.ts",
-    "dev": "concurrently --kill-others-on-fail \"npm run api\" \"npm run frontend\"",
+    "dev": "concurrently --kill-others-on-fail \"npm run api\" \"npm run frontend\""
   },
   "author": "Trybe",
   "devDependencies": {
