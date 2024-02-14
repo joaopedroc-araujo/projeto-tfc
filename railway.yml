@@ -1,0 +1,6 @@
+build:
+  commands:
+    - cd app/backend && npm install && npm run build
+
+run:
+  command: cd app/backend && npm start
