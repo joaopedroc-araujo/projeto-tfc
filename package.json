@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "Ao iniciar este projeto, você concorda com as diretrizes do Código de Ética e Conduta e do Manual da Pessoa Estudante da Trybe.",
   "main": "index.js",
+  "engines": {
+    "npm": ">=6"
+  },
   "scripts": {
     "install:front": "cd ./app/frontend && npm install",
     "install:back": "cd ./app/backend && npm install",
@@ -16,7 +19,7 @@
     "frontend": "cd frontend && npm start",
     "api": "cd api && nodemon app.js",
     "dev": "concurrently --kill-others-on-fail \"npm run api\" \"npm run frontend\"",
-    "heroku-postbuild": "cd frontend && npm install && npm run build"
+    "heroku-postbuild": "cd app/frontend && npm install && npm run build"
   },
   "author": "Trybe",
   "devDependencies": {
