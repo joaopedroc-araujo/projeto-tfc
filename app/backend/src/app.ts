@@ -31,13 +31,6 @@ class App {
     this.app.use(express.json());
     this.app.use(accessControl);
 
-    // Serve static files from the React frontend app
-    this.app.use(express.static(path.join(__dirname, '../frontend/build')))
-
-    // AFTER defining routes: Anything that doesn't match what's above, send back index.html
-    this.app.get('*', (req, res) => {
-      res.sendFile(path.join(__dirname + '/../frontend/build/index.html'))
-    })
   }
 
   public start(PORT: string | number): void {
