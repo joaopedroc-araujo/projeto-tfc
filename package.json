@@ -17,9 +17,8 @@
     "compose:down": "cd app && docker-compose down --remove-orphans",
     "logs": "cd app && docker-compose logs -f",
     "frontend": "cd frontend && npm start",
-    "api": "cd api && nodemon app.js",
+    "api": "cd app/backend && nodemon app.ts",
     "dev": "concurrently --kill-others-on-fail \"npm run api\" \"npm run frontend\"",
-    "heroku-postbuild": "cd app/frontend && npm install && npm run build"
   },
   "author": "Trybe",
   "devDependencies": {
