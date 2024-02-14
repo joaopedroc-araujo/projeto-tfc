@@ -4,6 +4,7 @@
   "description": "",
   "main": "./build/server",
   "engines": {
+    "node": ">=14.17.0",
     "npm": ">=6"
   },
   "scripts": {
