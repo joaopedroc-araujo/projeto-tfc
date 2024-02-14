@@ -9,7 +9,7 @@ import db from '.';
 import Team from './TeamsModel';
 
 class Match extends Model<InferAttributes<Match>,
-InferCreationAttributes<Match>> {
+  InferCreationAttributes<Match>> {
   declare id: CreationOptional<number>;
   declare homeTeamId: number;
   declare awayTeamId: number;
