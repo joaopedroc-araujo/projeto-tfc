@@ -4,8 +4,8 @@
   "description": "",
   "main": "./build/server",
   "engines": {
-    "node": ">=14.17.0",
-    "npm": ">=6"
+    "node": "18.x",
+    "npm": "8.x"
   },
   "scripts": {
     "test": "mocha -r ts-node/register ./src/tests/*$NAME*.{test,spec}.ts -t 10000 --exit",
