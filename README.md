@@ -1,10 +1,21 @@
-# :construction: README em construção ! :construction:
-<!-- Olá, Tryber!
-Esse é apenas um arquivo inicial para o README do seu projeto.
-É essencial que você preencha esse documento por conta própria, ok?
-Não deixe de usar nossas dicas de escrita de README de projetos, e deixe sua criatividade brilhar!
-:warning: IMPORTANTE: você precisa deixar nítido:
-- quais arquivos/pastas foram desenvolvidos por você; 
-- quais arquivos/pastas foram desenvolvidos por outra pessoa estudante;
-- quais arquivos/pastas foram desenvolvidos pela Trybe.
--->
+# Projeto TFC
+
+## Introdução
+O Projeto TFC foi desenvolvido como parte do curso de desenvolvimento web da Trybe. O objetivo principal é treinar a construção de um Back-End dockerizado, utilizando TypeScript. O Front-End do projeto e a dockerização foi completamente desenvolvido pela Trybe, enquanto o Back-End foi desenvolvido por mim.
+
+## Instalação
+Para instalar as dependências do Front-End e do Back-End de uma vez só, na pasta raiz do projeto, utilize o comando:
+```bash
+npm run install:apps
+```
+
+Se preferir instalar as dependências separadamente, utilize os comandos:
+```
+npm run install:frontend
+```
+ou
+```
+npm run install:backend
+```
+Contribuição
+Este projeto não está aberto para contribuições.
