@@ -9,7 +9,7 @@ Para instalar as dependências do Front-End e do Back-End de uma vez só, na pas
 npm run install:apps
 ```
 
-Se preferir instalar as dependências separadamente, utilize os comandos:
+Se preferir instalar as dependências separadamente, utilize os comandos abaixo para instalar as dependencias do Front-End e do Back-End separadamente:
 ```
 npm run install:frontend
 ```
